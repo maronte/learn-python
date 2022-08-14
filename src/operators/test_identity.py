@@ -33,3 +33,19 @@ def test_identity_operators():
     # To demonstrate the difference between "is" and "==": this comparison returns True because
     # first_fruits_list is equal to second_fruits_list.
     assert first_fruits_list == second_fruits_list
+
+    class TestClass:
+        def __init__(self, value):
+            self.value = value
+    
+    first_test_class = TestClass(1)
+    second_test_class = TestClass(1)
+    third_test_class = first_test_class
+
+    # First test class and second test class are not the same object.
+    assert first_test_class is not second_test_class
+    # First test class and third test class are the same object.
+    assert first_test_class is third_test_class
+
+    # Comparation between two objects is based on the memory location.
+    assert first_test_class == third_test_class

@@ -36,3 +36,6 @@ def test_variables():
     variable_with_changed_type = 'Sally'  # x is now of type str
 
     assert variable_with_changed_type == 'Sally'
+
+    float_variable = 1.5
+    assert float_variable == 1.5
