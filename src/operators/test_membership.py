@@ -23,3 +23,12 @@ def test_membership_operators():
 
     # Returns True because a sequence with the value "pineapple" is not in the list.
     assert "pineapple" not in fruit_list
+
+    # Membership operator can be used also for tuples and strings.
+
+    tupleTest = ("apple", "banana")
+    assert "apple" in tupleTest
+
+    stringTest = "apple,banana"
+    assert "apple" in stringTest
+
