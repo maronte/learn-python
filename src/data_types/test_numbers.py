@@ -50,6 +50,10 @@ def test_booleans():
     assert str(true_boolean) == "True"
     assert str(false_boolean) == "False"
 
+    # Let's try to cast boolean to integer.
+    assert int(true_boolean) == 1
+    assert int(false_boolean) == 0
+
 
 def test_float_numbers():
     """Float type
