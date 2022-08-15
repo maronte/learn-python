@@ -2,7 +2,7 @@
 
 # @see: https://www.learnpython.org/en/Lists
 # @see: https://docs.python.org/3/tutorial/introduction.html
-# @ee: https://docs.python.org/3/tutorial/datastructures.html#more-on-lists
+# @see: https://docs.python.org/3/tutorial/datastructures.html#more-on-lists
 
 Python knows a number of compound data types, used to group together
 other values. The most versatile is the list, which can be written as a
@@ -34,6 +34,23 @@ def test_list_type():
     # This means that the following slice returns a new (shallow) copy of
     # the list:
     assert squares[:] == [1, 4, 9, 16, 25]
+
+    # Playing with lists to assert that [:] is a shallow copy.
+    testList = [1, 2, 3]
+    copyTestList = testList[:]
+
+    # Assert that are different objects.
+    assert testList is not copyTestList
+
+    # Assert that does not reference the same numbers.
+    testList[0] += 1
+    assert copyTestList[0] != testList[0]
+
+    testList = [1, 2, [1, 2, 3]]
+    copyTestList = testList[:]
+
+    # Because copy is a shallow copy, the nested list will be a reference to the same list.
+    assert testList[-1] is copyTestList[-1]
 
     # Lists also support operations like concatenation:
     assert squares + [36, 49, 64, 81, 100] == [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
@@ -121,6 +138,22 @@ def test_list_methods():
     assert fruits.count('tangerine') == 0
     assert fruits.count('banana') == 2
 
+    # Assert that index search uses == operator
+    class TestClass:
+        def __init__(self, value):
+            self.value = value
+    obj = TestClass(1)
+    listWithObjects = [obj, TestClass(2), TestClass(3)]
+
+    # Assert that the index of the first object is 1
+    assert listWithObjects.index(obj) == 0
+
+    # Assert that if we search for an object with same value, but different memory address,
+    # we get an exception
+    with pytest.raises(Exception):
+        listWithObjects.index(TestClass(1))
+
+
     # list.copy()
     # Return a shallow copy of the list. Equivalent to a[:].
     fruits_copy = fruits.copy()
@@ -181,10 +214,11 @@ def test_del_statement():
 
     numbers = [-1, 1, 66.25, 333, 333, 1234.5]
 
-    del numbers[0]
-    assert numbers == [1, 66.25, 333, 333, 1234.5]
+    # Del can receive a list of indices to delete?
+    del numbers[0], numbers[0]
+    assert numbers == [66.25, 333, 333, 1234.5]
 
-    del numbers[2:4]
+    """del numbers[2:4]
     assert numbers == [1, 66.25, 1234.5]
 
     del numbers[:]
@@ -195,7 +229,7 @@ def test_del_statement():
     with pytest.raises(Exception):
         # Referencing the name a hereafter is an error (at least until another
         # value is assigned to it).
-        assert numbers == []  # noqa: F821
+        assert numbers == []  # noqa: F821"""
 
 
 def test_list_comprehensions():
